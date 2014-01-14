@@ -1210,6 +1210,7 @@ CGSize NISizeOfAttributedStringConstrainedToSize(NSAttributedString *attributedS
         return NSOrderedSame;
       }
     }];
+      
 
     for (NIAttributedLabelImage *labelImage in self.images) {
       CTRunDelegateCallbacks callbacks;
@@ -1466,6 +1467,7 @@ CGSize NISizeOfAttributedStringConstrainedToSize(NSAttributedString *attributedS
   }
 
   NSMutableAttributedString* attributedStringWithLinks = [self mutableAttributedStringWithAdditions];
+    NSLog(@"------attributedStringWithLinks-----%@----",attributedStringWithLinks);
   if (self.detectedlinkLocations.count > 0 || self.explicitLinkLocations.count > 0) {
     self.userInteractionEnabled = YES;
   }
@@ -1692,6 +1694,15 @@ CGFloat ImageDelegateGetWidthCallback(void* refCon) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)insertImage:(UIImage *)image atIndex:(NSInteger)index margins:(UIEdgeInsets)margins verticalTextAlignment:(NIVerticalTextAlignment)verticalTextAlignment {
+    if (self.autoReplaceImage) {
+        [self.images enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NIAttributedLabelImage *labelImage = (NIAttributedLabelImage *)obj;
+            NSInteger curIndex = labelImage.index;
+            if (curIndex == index) {
+                [self.images removeObject:obj];
+            }
+        }];
+    }
   NIAttributedLabelImage* labelImage = [[NIAttributedLabelImage alloc] init];
   labelImage.index = index;
   labelImage.image = image;

@@ -106,6 +106,7 @@ extern NSString * const kNILinkAttributeName;
 @property (nonatomic, assign) CGFloat strokeWidth;
 @property (nonatomic, strong) UIColor* strokeColor;
 @property (nonatomic, assign) CGFloat textKern;
+@property (nonatomic, assign) BOOL autoReplaceImage; // Default: NO
 
 - (void)setTextColor:(UIColor *)textColor range:(NSRange)range;
 - (void)setFont:(UIFont *)font range:(NSRange)range;
